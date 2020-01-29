@@ -1,0 +1,30 @@
+plugins {
+     id 'java-library'
+     id "it.gianluz.capsule" version "1.0.3"
+}
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+	//HELIDON
+	compile group: 'io.helidon', name: 'helidon-bom', version: '1.4.0', ext: 'pom'
+	compile group: 'io.helidon.microprofile.bundles', name: 'helidon-microprofile', version: '1.4.0'
+
+	//DB
+	compile group: 'org.apache.commons', name: 'commons-dbcp2', version: '2.7.0'
+	
+	//CONSUL
+	compile group: 'com.ecwid.consul', name: 'consul-api', version: '1.4.4'
+}
+
+task copyLibs(type: Copy){	
+	from configurations.runtime
+	into 'build/libs/libs'
+}
+
+task ejecutable(type: FatCapsule){
+	group = 'build'
+	applicationClass 'io.helidon.microprofile.server.Main'
+}
